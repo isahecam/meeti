@@ -9,7 +9,7 @@ export default function Hero() {
         <h1 className="text-center text-3xl font-black text-white uppercase lg:text-4xl">
           Encuentra Un Meeti o Crea una Comunidad para compartir lo que más te gusta
         </h1>
-        <Link className={buttonVariants({ variant: "default" })} href="/auth/create-account">
+        <Link className={buttonVariants({ variant: "default", size: "lg" })} href="/auth/create-account">
           Obtener una cuenta
         </Link>
       </div>
