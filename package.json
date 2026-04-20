@@ -9,6 +9,8 @@
     "start": "next start",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
+    "fmt": "oxfmt",
+    "fmt:check": "oxfmt --check",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -30,6 +32,7 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "lint-staged": "^16.4.0",
+    "oxfmt": "^0.45.0",
     "oxlint": "^1.60.0",
     "postcss": "^8",
     "tailwindcss": "^4.2.1",
