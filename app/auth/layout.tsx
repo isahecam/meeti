@@ -8,13 +8,11 @@ export default function AuthLayout({
   children: React.ReactNode
 }>) {
   return (
-    <>
-      <div className="flex justify-center pt-10">
-        <Link href="/" className="outline-none">
-          <MeetiLogo />
-        </Link>
-      </div>
-      <main className="mx-auto max-w-2xl px-5 py-16">{children}</main>
-    </>
+    <main className="mx-auto flex h-dvh max-w-2xl flex-col items-center justify-center gap-8">
+      <Link href="/" className="outline-none">
+        <MeetiLogo />
+      </Link>
+      {children}
+    </main>
   )
 }
