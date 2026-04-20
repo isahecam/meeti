@@ -1,8 +1,6 @@
 {
   "$schema": "./node_modules/oxfmt/configuration_schema.json",
-  "ignorePatterns": [
-    "shared/components/ui/**"
-  ],
+  "ignorePatterns": ["shared/components/ui/**"],
   "printWidth": 120,
   "singleQuote": false,
   "semi": false,
@@ -13,10 +11,7 @@
   "bracketSameLine": true,
   "sortTailwindcss": {
     "stylesheet": "./app/globals.css",
-    "functions": [
-      "clsx",
-      "cn"
-    ],
+    "functions": ["clsx", "cn"],
     "preserveWhitespace": false
   }
 }
