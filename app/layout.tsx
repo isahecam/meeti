@@ -1,8 +1,10 @@
-import { Geist, Geist_Mono } from "next/font/google"
+import { Metadata } from "next"
 
 import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
-import { cn } from "@/lib/utils"
+import { Geist, Geist_Mono } from "next/font/google"
+
+import { cn } from "~/lib/utils"
+import { ThemeProvider } from "~/shared/providers/theme-provider"
 
 const fontSans = Geist({
   subsets: ["latin"],
@@ -11,6 +13,13 @@ const fontSans = Geist({
 
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" })
 
+export const metadata: Metadata = {
+  title: {
+    template: "%s | Meeti",
+    default: "Meeti",
+  },
+  description: "Crea y gestiona tus reuniones y/o comunidades para compartir lo que más te gusta con Meeti",
+}
 export default function RootLayout({
   children,
 }: Readonly<{
