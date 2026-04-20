@@ -6,7 +6,7 @@ interface Props extends React.HTMLAttributes<HTMLParagraphElement> {
 
 export function Paragraph({ children, className, ...props }: Props) {
   return (
-    <p className={clsx("leading-7 [&:not(:first-child)]:mt-6", className)} {...props}>
+    <p className={clsx("leading-7 not-first:mt-6", className)} {...props}>
       {children}
     </p>
   )
