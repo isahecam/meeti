@@ -131,3 +131,7 @@
     cursor: pointer;
   }
 }
+
+@utility bg-hero {
+  background-image: url("/images/hero.jpg");
+}
