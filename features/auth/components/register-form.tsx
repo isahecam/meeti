@@ -1,33 +1,107 @@
 "use client"
 
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Controller, useForm } from "react-hook-form"
+
+import { SignUpSchema, SignUpType } from "~/features/auth/schemas/auth-schema"
 import { Form } from "~/shared/components/forms/form"
 import { FormSubmitButton } from "~/shared/components/forms/form-submit-button"
-import { Field, FieldGroup, FieldLabel } from "~/shared/components/ui/field"
+import { Field, FieldError, FieldGroup, FieldLabel } from "~/shared/components/ui/field"
 import { Input } from "~/shared/components/ui/input"
 
 export function RegisterForm() {
+  const { control, handleSubmit } = useForm<SignUpType>({
+    resolver: zodResolver(SignUpSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+      passwordConfirmation: "",
+    },
+    mode: "all",
+  })
+
+  const onSubmit = (data: SignUpType) => {
+    console.log(data)
+  }
+
   return (
-    <Form>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <FieldGroup>
-        <Field>
-          <FieldLabel htmlFor="name">Nombre</FieldLabel>
-          <Input id="name" type="text" autoComplete="given-name" placeholder="Tu Nombre" />
-        </Field>
+        <Controller
+          name="name"
+          control={control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="name">Nombre</FieldLabel>
+              <Input
+                {...field}
+                aria-invalid={fieldState.invalid}
+                id="name"
+                type="text"
+                autoComplete="given-name"
+                placeholder="Tu Nombre"
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
 
-        <Field>
-          <FieldLabel htmlFor="email">Correo Electrónico</FieldLabel>
-          <Input id="email" type="email" autoComplete="email" placeholder="tu@email.com" />
-        </Field>
+        <Controller
+          name="email"
+          control={control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="email">Correo Electrónico</FieldLabel>
+              <Input
+                {...field}
+                aria-invalid={fieldState.invalid}
+                id="email"
+                type="email"
+                autoComplete="email"
+                placeholder="tu@email.com"
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
 
-        <Field>
-          <FieldLabel htmlFor="password">Contraseña</FieldLabel>
-          <Input id="password" type="password" placeholder="********" />
-        </Field>
+        <Controller
+          name="password"
+          control={control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="password">Contraseña</FieldLabel>
+              <Input
+                {...field}
+                aria-invalid={fieldState.invalid}
+                id="password"
+                type="password"
+                autoComplete="new-password"
+                placeholder="********"
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
 
-        <Field>
-          <FieldLabel htmlFor="passwordConfirmation">Confirmar Contraseña</FieldLabel>
-          <Input id="passwordConfirmation" type="password" placeholder="********" />
-        </Field>
+        <Controller
+          name="passwordConfirmation"
+          control={control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="passwordConfirmation">Confirmar Contraseña</FieldLabel>
+              <Input
+                {...field}
+                aria-invalid={fieldState.invalid}
+                id="passwordConfirmation"
+                type="password"
+                placeholder="********"
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
       </FieldGroup>
 
       <FormSubmitButton className="w-full">Crear Cuenta</FormSubmitButton>
