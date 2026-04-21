@@ -1,7 +1,13 @@
-import { Menu } from "lucide-react"
+"use client"
+
+import { LogOut, Menu } from "lucide-react"
 import Link from "next/link"
+import { redirect } from "next/navigation"
+import { useCallback, useState, useTransition } from "react"
+import { toast } from "sonner"
 
 import { USER_MENU_ITEMS } from "~/features/dashboard/constants/user-menu-items"
+import { signOut } from "~/lib/auth-client"
 import { Button } from "~/shared/components/ui/button"
 import {
   DropdownMenu,
@@ -10,13 +16,35 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "~/shared/components/ui/dropdown-menu"
+import { Spinner } from "~/shared/components/ui/spinner"
 
 export function UserMenu() {
+  const [open, setOpen] = useState(false)
+  const [isPending, startTransition] = useTransition()
+
+  const handleOpenChange = useCallback((value: boolean) => !isPending && setOpen(value), [isPending])
+
+  const handleSignOut = useCallback(() => {
+    startTransition(async () => {
+      await signOut({
+        fetchOptions: {
+          onSuccess: () => {
+            toast.success("Tu sesión ha sido cerrada correctamente")
+            redirect("/auth/login")
+          },
+          onError: () => {
+            setOpen(false)
+            toast.error("Hubo un error al cerrar sesión")
+          },
+        },
+      })
+    })
+  }, [])
+
   return (
-    <DropdownMenu>
+    <DropdownMenu open={open} onOpenChange={handleOpenChange}>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon">
           <Menu />
@@ -36,9 +64,18 @@ export function UserMenu() {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            Log out
-            <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+          <DropdownMenuItem onClick={handleSignOut} disabled={isPending}>
+            {isPending ? (
+              <>
+                <Spinner data-icon="inline-start" />
+                Cerrando sesión...
+              </>
+            ) : (
+              <>
+                <LogOut />
+                Cerrar Sesión
+              </>
+            )}
           </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>
