@@ -1,5 +1,5 @@
 const AUTH_ERROR_MESSAGES = {
-  USER_NOT_FOUND: "No encontramos una cuenta asociada a esos datos.",
+  USER_NOT_FOUND: "No encontramos una cuenta asociada a los datos proporcionados.",
   FAILED_TO_CREATE_USER: "No pudimos crear tu cuenta. Intenta nuevamente.",
   FAILED_TO_CREATE_SESSION: "No pudimos iniciar tu sesión. Intenta nuevamente.",
   FAILED_TO_UPDATE_USER: "No pudimos actualizar tu cuenta. Intenta nuevamente.",
@@ -15,7 +15,7 @@ const AUTH_ERROR_MESSAGES = {
   ID_TOKEN_NOT_SUPPORTED: "El id_token no es compatible.",
   FAILED_TO_GET_USER_INFO: "No pudimos obtener la información del usuario.",
   USER_EMAIL_NOT_FOUND: "No encontramos el correo del usuario.",
-  EMAIL_NOT_VERIFIED: "Debes verificar tu correo electrónico antes de continuar.",
+  EMAIL_NOT_VERIFIED: "Tu cuenta no ha sido verificada. Hemos enviado un nuevo correo de verificación.",
   PASSWORD_TOO_SHORT: "La contraseña es demasiado corta.",
   PASSWORD_TOO_LONG: "La contraseña es demasiado larga.",
   USER_ALREADY_EXISTS: "Ya existe una cuenta con esos datos.",
