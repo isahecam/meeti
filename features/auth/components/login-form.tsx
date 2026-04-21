@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import Link from "next/link"
+import { redirect } from "next/navigation"
 import { useTransition } from "react"
 import { Controller, useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -38,8 +39,8 @@ export function LoginForm() {
       }
 
       toast.success("Tu sesión ha sido iniciada correctamente")
-
       reset()
+      redirect("/dashboard")
     })
   }
 
