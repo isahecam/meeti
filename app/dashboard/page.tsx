@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation"
 
+import { SiteHeader } from "~/features/dashboard/components/site-header"
 import { requireAuth } from "~/lib/auth-server"
-import { Heading } from "~/shared/components/typography/heading"
 
 export default async function DashboardPage() {
   const { isAuth } = await requireAuth()
@@ -12,7 +12,7 @@ export default async function DashboardPage() {
 
   return (
     <>
-      <Heading level={1}>Dashboard</Heading>
+      <SiteHeader />
     </>
   )
 }
