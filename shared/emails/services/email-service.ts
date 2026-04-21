@@ -15,7 +15,7 @@ export class EmailService {
   static async send({ from, to, subject, react, text }: SendEmailOptions) {
     const { data, error } = await resend.emails.send({ from, to, subject, react, text })
 
-    if (error) return err({ reason: error.message })
+    if (error) return err({ reason: error.name })
 
     return ok(data)
   }
