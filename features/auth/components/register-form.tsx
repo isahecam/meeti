@@ -1,6 +1,7 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useTransition } from "react"
 import { Controller, useForm } from "react-hook-form"
 import { toast } from "sonner"
 
@@ -11,8 +12,10 @@ import { Form } from "~/shared/components/forms/form"
 import { FormSubmitButton } from "~/shared/components/forms/form-submit-button"
 import { Field, FieldError, FieldGroup, FieldLabel } from "~/shared/components/ui/field"
 import { Input } from "~/shared/components/ui/input"
+import { Spinner } from "~/shared/components/ui/spinner"
 
 export function RegisterForm() {
+  const [isPending, startTransition] = useTransition()
   const { control, handleSubmit, reset } = useForm<SignUpType>({
     resolver: zodResolver(SignUpSchema),
     defaultValues: {
@@ -24,16 +27,21 @@ export function RegisterForm() {
     mode: "all",
   })
 
-  const onSubmit = async (data: SignUpType) => {
-    const [error] = await signUpAction(data)
+  const onSubmit = (data: SignUpType) => {
+    startTransition(async () => {
+      const [error] = await signUpAction(data)
 
-    if (error) return toast.error(getAuthErrorMessage(error.reason))
+      if (error) {
+        toast.error(getAuthErrorMessage(error.reason))
+        return
+      }
 
-    toast.success("Tu cuenta ha sido creada correctamente", {
-      description: "Revisa tu correo para verificar tu cuenta",
+      toast.success("Tu cuenta ha sido creada correctamente", {
+        description: "Revisa tu correo para verificar tu cuenta",
+      })
+
+      reset()
     })
-
-    reset()
   }
 
   return (
@@ -115,7 +123,16 @@ export function RegisterForm() {
         />
       </FieldGroup>
 
-      <FormSubmitButton className="w-full">Crear Cuenta</FormSubmitButton>
+      <FormSubmitButton className="w-full" disabled={isPending}>
+        {isPending ? (
+          <>
+            <Spinner data-icon="inline-start" />
+            Creando cuenta...
+          </>
+        ) : (
+          "Crear Cuenta"
+        )}
+      </FormSubmitButton>
     </Form>
   )
 }
