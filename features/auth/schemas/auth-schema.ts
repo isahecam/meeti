@@ -19,7 +19,9 @@ export const SignUpSchema = BaseAuthSchema.pick({
   path: ["passwordConfirmation"],
 })
 
-export const SignInSchema = BaseAuthSchema.pick({ email: true, password: true })
+export const SignInSchema = BaseAuthSchema.pick({ email: true }).extend({
+  password: z.string().trim().nonempty({ error: "Establece tu contraseña para iniciar sesión" }),
+})
 
 export type SignUpType = z.infer<typeof SignUpSchema>
 export type SignInType = z.infer<typeof SignInSchema>
