@@ -5,6 +5,7 @@ import { Controller, useForm } from "react-hook-form"
 import { toast } from "sonner"
 
 import { signUpAction } from "~/features/auth/actions/sign-up-action"
+import { getAuthErrorMessage } from "~/features/auth/lib/get-auth-error-message"
 import { SignUpSchema, SignUpType } from "~/features/auth/schemas/auth-schema"
 import { Form } from "~/shared/components/forms/form"
 import { FormSubmitButton } from "~/shared/components/forms/form-submit-button"
@@ -12,7 +13,7 @@ import { Field, FieldError, FieldGroup, FieldLabel } from "~/shared/components/u
 import { Input } from "~/shared/components/ui/input"
 
 export function RegisterForm() {
-  const { control, handleSubmit } = useForm<SignUpType>({
+  const { control, handleSubmit, reset } = useForm<SignUpType>({
     resolver: zodResolver(SignUpSchema),
     defaultValues: {
       name: "",
@@ -26,9 +27,13 @@ export function RegisterForm() {
   const onSubmit = async (data: SignUpType) => {
     const [error] = await signUpAction(data)
 
-    if (error) return toast.error(error.reason)
+    if (error) return toast.error(getAuthErrorMessage(error.reason))
 
-    toast.success("Usuario creado correctamente")
+    toast.success("Tu cuenta ha sido creada correctamente", {
+      description: "Revisa tu correo para verificar tu cuenta",
+    })
+
+    reset()
   }
 
   return (
