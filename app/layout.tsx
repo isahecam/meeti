@@ -5,6 +5,7 @@ import { Geist, Geist_Mono } from "next/font/google"
 
 import { cn } from "~/lib/utils"
 import { Toaster } from "~/shared/components/ui/sonner"
+import { TooltipProvider } from "~/shared/components/ui/tooltip"
 import { ThemeProvider } from "~/shared/providers/theme-provider"
 
 const fontSans = Geist({
@@ -33,7 +34,7 @@ export default function RootLayout({
       className={cn("antialiased", fontSans.variable, "font-mono", geistMono.variable)}>
       <body>
         <ThemeProvider>
-          {children}
+          <TooltipProvider>{children}</TooltipProvider>
           <Toaster richColors position="top-right" />
         </ThemeProvider>
       </body>
