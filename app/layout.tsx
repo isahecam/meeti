@@ -4,6 +4,7 @@ import "./globals.css"
 import { Geist, Geist_Mono } from "next/font/google"
 
 import { cn } from "~/lib/utils"
+import { Toaster } from "~/shared/components/ui/sonner"
 import { ThemeProvider } from "~/shared/providers/theme-provider"
 
 const fontSans = Geist({
@@ -31,7 +32,10 @@ export default function RootLayout({
       suppressHydrationWarning
       className={cn("antialiased", fontSans.variable, "font-mono", geistMono.variable)}>
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          {children}
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   )
