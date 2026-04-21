@@ -22,7 +22,7 @@ class AuthService {
       )
     } catch (error: unknown) {
       if (error instanceof APIError) {
-        return err({ reason: `${error.status}` })
+        return err({ reason: error.body?.code ?? "UNEXPECTED_ERROR" })
       }
 
       return err({ reason: "UNEXPECTED_ERROR" })
