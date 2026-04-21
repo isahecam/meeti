@@ -9,5 +9,5 @@ export async function signUpAction(values: SignUpType) {
 
   if (!success) return err({ reason: "invalid_data" })
 
-  await authService.register(data)
+  return await authService.register(data)
 }
