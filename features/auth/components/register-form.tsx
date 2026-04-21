@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Controller, useForm } from "react-hook-form"
 
+import { signUpAction } from "~/features/auth/actions/sign-up-action"
 import { SignUpSchema, SignUpType } from "~/features/auth/schemas/auth-schema"
 import { Form } from "~/shared/components/forms/form"
 import { FormSubmitButton } from "~/shared/components/forms/form-submit-button"
@@ -21,8 +22,8 @@ export function RegisterForm() {
     mode: "all",
   })
 
-  const onSubmit = (data: SignUpType) => {
-    console.log(data)
+  const onSubmit = async (data: SignUpType) => {
+    await signUpAction(data)
   }
 
   return (
