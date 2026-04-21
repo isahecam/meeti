@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Controller, useForm } from "react-hook-form"
+import { toast } from "sonner"
 
 import { signUpAction } from "~/features/auth/actions/sign-up-action"
 import { SignUpSchema, SignUpType } from "~/features/auth/schemas/auth-schema"
@@ -23,7 +24,11 @@ export function RegisterForm() {
   })
 
   const onSubmit = async (data: SignUpType) => {
-    await signUpAction(data)
+    const [error] = await signUpAction(data)
+
+    if (error) return toast.error(error.reason)
+
+    toast.success("Usuario creado correctamente")
   }
 
   return (
