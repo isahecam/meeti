@@ -16,6 +16,7 @@ import { Spinner } from "~/shared/components/ui/spinner"
 
 export function RegisterForm() {
   const [isPending, startTransition] = useTransition()
+
   const { control, handleSubmit, reset } = useForm<SignUpType>({
     resolver: zodResolver(SignUpSchema),
     defaultValues: {
