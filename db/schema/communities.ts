@@ -1,7 +1,7 @@
 import { pgTable, timestamp, uuid, varchar } from "drizzle-orm/pg-core"
 
 // Comunnity Table
-export const community = pgTable("community", {
+export const communitiesTable = pgTable("communities", {
   id: uuid("id").primaryKey().defaultRandom(),
   name: varchar("name", { length: 255 }).notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
