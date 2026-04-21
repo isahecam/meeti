@@ -7,7 +7,7 @@ import { err } from "~/lib/result"
 export async function signUpAction(values: SignUpType) {
   const { success, data } = SignUpSchema.safeParse(values)
 
-  if (!success) return err({ reason: "invalid_data" })
+  if (!success) return err({ reason: "INVALID_DATA" })
 
   return await authService.register(data)
 }
