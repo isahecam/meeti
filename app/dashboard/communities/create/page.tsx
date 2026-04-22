@@ -1,6 +1,7 @@
 import { Metadata } from "next"
 import Link from "next/link"
 
+import { CreateCommunity } from "~/features/communities/components/create-community"
 import { Heading } from "~/shared/components/typography/heading"
 import { buttonVariants } from "~/shared/components/ui/button"
 
@@ -11,13 +12,15 @@ export const metadata: Metadata = {
 
 export default function CreateCommunitiesPage() {
   return (
-    <div className="px-12 py-8">
+    <div className="space-y-16 px-12 py-8">
       <div className="space-y-4">
         <Heading level={1}>Crear comunidad</Heading>
         <Link href="/dashboard/communities" className={buttonVariants({ variant: "secondary" })}>
           Volver a mis comunidades
         </Link>
       </div>
+
+      <CreateCommunity />
     </div>
   )
 }
