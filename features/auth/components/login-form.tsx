@@ -20,7 +20,7 @@ import { Spinner } from "~/shared/components/ui/spinner"
 export function LoginForm() {
   const [isPending, startTransition] = useTransition()
 
-  const { control, handleSubmit, reset } = useForm<SignInType>({
+  const { control, handleSubmit } = useForm<SignInType>({
     resolver: zodResolver(SignInSchema),
     defaultValues: {
       email: "",
@@ -39,7 +39,6 @@ export function LoginForm() {
       }
 
       toast.success("Tu sesión ha sido iniciada correctamente")
-      reset()
       redirect("/dashboard")
     })
   }
