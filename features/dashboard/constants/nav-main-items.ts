@@ -10,7 +10,7 @@ export const NAV_MAIN_ITEMS = [
   },
   {
     title: "Comunidades",
-    url: "#",
+    url: "/dashboard/communities",
     icon: Users,
   },
   {
