@@ -1,6 +1,8 @@
 import { Metadata } from "next"
 import Link from "next/link"
+import { redirect } from "next/navigation"
 
+import { requireAuth } from "~/lib/auth-server"
 import { Heading } from "~/shared/components/typography/heading"
 import { buttonVariants } from "~/shared/components/ui/button"
 
@@ -9,7 +11,13 @@ export const metadata: Metadata = {
   description: "Revisa las comunidades a las que te uniste y adminístralas",
 }
 
-export default function JoinedCommunitiesPage() {
+export default async function JoinedCommunitiesPage() {
+  const { isAuth } = await requireAuth()
+
+  if (!isAuth) {
+    redirect("/auth/login")
+  }
+
   return (
     <div className="px-12 py-8">
       <div className="space-y-4">
