@@ -13,6 +13,9 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     requireEmailVerification: true,
+    sendResetPassword: async ({ user: { name, email }, url }) => {
+      await AuthEmailService.sendPasswordResetEmail(name, email, url)
+    },
   },
   emailVerification: {
     sendOnSignIn: true,
