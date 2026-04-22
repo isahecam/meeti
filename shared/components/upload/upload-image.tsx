@@ -19,10 +19,10 @@ export function UploadImage() {
   const [uploadedImage, setUploadedImage] = useState("")
 
   return (
-    <>
+    <div className="container flex flex-col gap-x-6 gap-y-3 @2xl:flex-row">
       <UploadDropzone
         endpoint="imageUploader"
-        className="ut-button:h-9 ut-button:cursor-pointer! ut-button:bg-primary ut-button:text-sm ut-button:ring-0 hover:ut-button:bg-primary/80"
+        className="mt-0 ut-button:h-9 ut-button:cursor-pointer! ut-button:bg-primary ut-button:text-sm ut-button:ring-0 hover:ut-button:bg-primary/80"
         appearance={{
           button:
             "ut-ready:bg-primary w-auto px-4 ut-uploading:cursor-not-allowed after:bg-secondary-400 after:text-white",
@@ -62,13 +62,13 @@ export function UploadImage() {
             priority
             src={uploadedImage}
             alt="Portada de la comunidad"
-            width={300}
-            height={300}
-            className="h-auto w-full"
+            width={756}
+            height={75}
+            className="h-[258px] w-full object-cover xl:h-[312px]"
           />
           <FieldLabel>Imagen de la comunidad</FieldLabel>
         </Field>
       )}
-    </>
+    </div>
   )
 }
