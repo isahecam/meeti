@@ -1,7 +1,7 @@
 import { APIError } from "better-auth"
 import { headers } from "next/headers"
 
-import { SignInType, SignUpType } from "~/features/auth/schemas/auth-schema"
+import { ForgotPasswordType, SignInType, SignUpType } from "~/features/auth/schemas/auth-schema"
 import { authRepository, IAuthRepository } from "~/features/auth/services/auth-respository"
 import { auth } from "~/lib/auth"
 import { err, ok } from "~/lib/result"
@@ -55,6 +55,30 @@ class AuthService {
             callbackURL: "/dashboard",
           },
           headers: await headers(),
+        }),
+      )
+    } catch (error) {
+      if (error instanceof APIError) {
+        return err({ reason: error.body?.code ?? "UNEXPECTED_ERROR" })
+      }
+
+      return err({ reason: "UNEXPECTED_ERROR" })
+    }
+  }
+
+  async requestPasswordReset({ email }: ForgotPasswordType) {
+    // * Revisar si el email ya está registrado
+    const user = await this.authRepository.userExists(email)
+    if (!user) return err({ reason: "USER_NOT_FOUND" })
+
+    // * Enviar el correo de recuperación de contraseña
+    try {
+      return ok(
+        await auth.api.requestPasswordReset({
+          body: {
+            email,
+            redirectTo: "/auth/set-new-password",
+          },
         }),
       )
     } catch (error) {
