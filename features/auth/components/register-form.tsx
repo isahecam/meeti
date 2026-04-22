@@ -1,6 +1,7 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useRouter } from "next/navigation"
 import { useTransition } from "react"
 import { Controller, useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -15,9 +16,10 @@ import { Input } from "~/shared/components/ui/input"
 import { Spinner } from "~/shared/components/ui/spinner"
 
 export function RegisterForm() {
+  const router = useRouter()
   const [isPending, startTransition] = useTransition()
 
-  const { control, handleSubmit, reset } = useForm<SignUpType>({
+  const { control, handleSubmit } = useForm<SignUpType>({
     resolver: zodResolver(SignUpSchema),
     defaultValues: {
       name: "",
@@ -40,8 +42,7 @@ export function RegisterForm() {
       toast.success("Tu cuenta ha sido creada correctamente", {
         description: "Revisa tu correo para verificar tu cuenta",
       })
-
-      reset()
+      router.push("/auth/login")
     })
   }
 
