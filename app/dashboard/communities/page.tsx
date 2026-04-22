@@ -1,8 +1,10 @@
 import { Metadata } from "next"
 import Link from "next/link"
 import { redirect } from "next/navigation"
+import { Suspense } from "react"
 
-import { MyCommunitiesList } from "~/features/communities/components/layout/my-communities-list"
+import { UserCommunitiesList } from "~/features/communities/components/layout/user-communities-list"
+import { UserCommunitiesListSkeleton } from "~/features/communities/components/skeletons/user-communities-list-skeleton"
 import { requireAuth } from "~/lib/auth-server"
 import { Heading } from "~/shared/components/typography/heading"
 import { buttonVariants } from "~/shared/components/ui/button"
@@ -34,7 +36,9 @@ export default async function CommunitiesPage() {
           </Link>
         </nav>
 
-        <MyCommunitiesList />
+        <Suspense fallback={<UserCommunitiesListSkeleton />}>
+          <UserCommunitiesList />
+        </Suspense>
       </div>
     </div>
   )
