@@ -1,7 +1,9 @@
 import Image from "next/image"
+import Link from "next/link"
 
+import { CommunityDropdownMenu } from "~/features/communities/components/community-dropdown-menu"
 import { CommunityWithPermissions } from "~/features/communities/types/community-types"
-import { Card, CardDescription, CardHeader, CardTitle } from "~/shared/components/ui/card"
+import { Card, CardAction, CardDescription, CardHeader, CardTitle } from "~/shared/components/ui/card"
 
 interface Props {
   community: CommunityWithPermissions
@@ -21,8 +23,15 @@ export function UserCommunityCard({ community }: Props) {
       </div>
 
       <CardHeader className="min-w-0 flex-1 p-0">
-        <CardTitle className="truncate text-sm font-medium">{community.data.name}</CardTitle>
+        <Link href="/dashboard/communities" className="group/card-title">
+          <CardTitle className="truncate text-sm font-medium text-balance underline-offset-4 group-hover/card-title:underline">
+            {community.data.name}
+          </CardTitle>
+        </Link>
         <CardDescription className="line-clamp-3">{community.data.description}</CardDescription>
+        <CardAction>
+          <CommunityDropdownMenu community={community.data} />
+        </CardAction>
       </CardHeader>
     </Card>
   )
