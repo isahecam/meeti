@@ -18,6 +18,7 @@ const LABELS: Record<string, string> = {
   communities: "Comunidades",
   create: "Crear",
   edit: "Editar",
+  joined: "A las que te uniste",
   settings: "Configuración",
 }
 
