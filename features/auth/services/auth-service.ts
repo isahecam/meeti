@@ -77,7 +77,6 @@ class AuthService {
         await auth.api.requestPasswordReset({
           body: {
             email,
-            redirectTo: "/auth/set-new-password",
           },
         }),
       )
