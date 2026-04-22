@@ -2,7 +2,7 @@
 
 import { LogOut, Menu } from "lucide-react"
 import Link from "next/link"
-import { redirect } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { useCallback, useState, useTransition } from "react"
 import { toast } from "sonner"
 
@@ -22,17 +22,18 @@ import { Spinner } from "~/shared/components/ui/spinner"
 
 export function UserMenu() {
   const [open, setOpen] = useState(false)
+  const router = useRouter()
   const [isPending, startTransition] = useTransition()
 
   const handleOpenChange = useCallback((value: boolean) => !isPending && setOpen(value), [isPending])
 
-  const handleSignOut = useCallback(() => {
+  const handleSignOut = () => {
     startTransition(async () => {
       await signOut({
         fetchOptions: {
           onSuccess: () => {
             toast.success("Tu sesión ha sido cerrada correctamente")
-            redirect("/auth/login")
+            router.push("/auth/login")
           },
           onError: () => {
             setOpen(false)
@@ -41,7 +42,7 @@ export function UserMenu() {
         },
       })
     })
-  }, [])
+  }
 
   return (
     <DropdownMenu open={open} onOpenChange={handleOpenChange}>
