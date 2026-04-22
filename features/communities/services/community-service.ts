@@ -45,7 +45,7 @@ class CommunityService {
       }),
     )
 
-    return ok(enriched)
+    return enriched
   }
 }
 
