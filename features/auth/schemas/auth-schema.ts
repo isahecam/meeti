@@ -23,5 +23,8 @@ export const SignInSchema = BaseAuthSchema.pick({ email: true }).extend({
   password: z.string().trim().nonempty({ error: "Establece tu contraseña para iniciar sesión" }),
 })
 
+export const ForgotPasswordSchema = BaseAuthSchema.pick({ email: true })
+
 export type SignUpType = z.infer<typeof SignUpSchema>
 export type SignInType = z.infer<typeof SignInSchema>
+export type ForgotPasswordType = z.infer<typeof ForgotPasswordSchema>
