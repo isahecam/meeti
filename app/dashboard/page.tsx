@@ -1,6 +1,5 @@
 import { redirect } from "next/navigation"
 
-import { SiteHeader } from "~/features/dashboard/components/site-header"
 import { requireAuth } from "~/lib/auth-server"
 
 export default async function DashboardPage() {
@@ -10,9 +9,5 @@ export default async function DashboardPage() {
     redirect("/auth/login")
   }
 
-  return (
-    <>
-      <SiteHeader />
-    </>
-  )
+  return <div>DashboardPage</div>
 }
