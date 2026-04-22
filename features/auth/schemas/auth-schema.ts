@@ -25,6 +25,15 @@ export const SignInSchema = BaseAuthSchema.pick({ email: true }).extend({
 
 export const ForgotPasswordSchema = BaseAuthSchema.pick({ email: true })
 
+export const ResetPasswordSchema = BaseAuthSchema.pick({ password: true, passwordConfirmation: true }).refine(
+  (data) => data.password === data.passwordConfirmation,
+  {
+    error: "Las contraseñas no coinciden",
+    path: ["passwordConfirmation"],
+  },
+)
+
 export type SignUpType = z.infer<typeof SignUpSchema>
 export type SignInType = z.infer<typeof SignInSchema>
 export type ForgotPasswordType = z.infer<typeof ForgotPasswordSchema>
+export type ResetPasswordType = z.infer<typeof ResetPasswordSchema>
