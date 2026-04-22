@@ -7,6 +7,7 @@ import { CommunityType } from "~/features/communities/schemas/community-schema"
 import { Field, FieldError, FieldGroup, FieldLabel } from "~/shared/components/ui/field"
 import { Input } from "~/shared/components/ui/input"
 import { Textarea } from "~/shared/components/ui/textarea"
+import { UploadImage } from "~/shared/components/upload/upload-image"
 
 export function CommunityForm() {
   const formId = useId()
@@ -28,6 +29,17 @@ export function CommunityForm() {
               autoComplete="off"
             />
             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+          </Field>
+        )}
+      />
+
+      <Controller
+        name="image"
+        control={control}
+        render={({ fieldState }) => (
+          <Field data-invalid={fieldState.invalid}>
+            <FieldLabel htmlFor={`${formId}-image`}>Portada de la comunidad</FieldLabel>
+            <UploadImage />
           </Field>
         )}
       />
