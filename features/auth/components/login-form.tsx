@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import Link from "next/link"
-import { redirect } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { useTransition } from "react"
 import { Controller, useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -18,6 +18,7 @@ import { Input } from "~/shared/components/ui/input"
 import { Spinner } from "~/shared/components/ui/spinner"
 
 export function LoginForm() {
+  const router = useRouter()
   const [isPending, startTransition] = useTransition()
 
   const { control, handleSubmit } = useForm<SignInType>({
@@ -39,7 +40,7 @@ export function LoginForm() {
       }
 
       toast.success("Tu sesión ha sido iniciada correctamente")
-      redirect("/dashboard")
+      router.push("/dashboard")
     })
   }
 
