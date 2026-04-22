@@ -2,6 +2,7 @@ import { Metadata } from "next"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 
+import { MyCommunitiesList } from "~/features/communities/components/layout/my-communities-list"
 import { requireAuth } from "~/lib/auth-server"
 import { Heading } from "~/shared/components/typography/heading"
 import { buttonVariants } from "~/shared/components/ui/button"
@@ -32,6 +33,8 @@ export default async function CommunitiesPage() {
             Comunidades a las que te uniste
           </Link>
         </nav>
+
+        <MyCommunitiesList />
       </div>
     </div>
   )
