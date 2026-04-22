@@ -18,10 +18,8 @@ import { Spinner } from "~/shared/components/ui/spinner"
 export function ResetPasswordForm() {
   const searchParams = useSearchParams()
   const token = searchParams.get("token")
-  const errorToken = searchParams.get("error")
 
   if (!token) redirect("/auth/forgot-password")
-  if (errorToken) toast.error(getAuthErrorMessage(errorToken))
 
   const [isPending, startTransition] = useTransition()
 
