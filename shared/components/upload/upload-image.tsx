@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useFormContext } from "react-hook-form"
 import { toast } from "sonner"
 import { twMerge } from "tailwind-merge"
@@ -15,8 +15,16 @@ export function UploadImage() {
   const {
     formState: { errors },
     setValue,
+    getValues,
   } = useFormContext<CommunityType>()
   const [uploadedImage, setUploadedImage] = useState("")
+  const currentImage = getValues("image")
+
+  useEffect(() => {
+    if (currentImage) {
+      setUploadedImage(currentImage)
+    }
+  }, [currentImage])
 
   return (
     <div className="container flex flex-col gap-x-6 gap-y-3 @2xl:flex-row">
