@@ -29,9 +29,11 @@ export function UserCommunityCard({ community }: Props) {
           </CardTitle>
         </Link>
         <CardDescription className="line-clamp-3">{community.data.description}</CardDescription>
-        <CardAction>
-          <CommunityDropdownMenu community={community.data} />
-        </CardAction>
+        {community.context.isAdmin && (
+          <CardAction>
+            <CommunityDropdownMenu community={community.data} />
+          </CardAction>
+        )}
       </CardHeader>
     </Card>
   )
