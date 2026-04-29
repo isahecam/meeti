@@ -1,4 +1,5 @@
 import { EllipsisVerticalIcon, PencilIcon, TrashIcon, UsersIcon } from "lucide-react"
+import Link from "next/link"
 
 import { SelectCommunity } from "~/features/communities/types/community-types"
 import { Button } from "~/shared/components/ui/button"
@@ -25,9 +26,11 @@ export function CommunityDropdownMenu({ community }: Props) {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-40" align="end">
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <PencilIcon />
-            Editar
+          <DropdownMenuItem asChild>
+            <Link href={`/dashboard/communities/${community.id}/edit`}>
+              <PencilIcon />
+              Editar
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
             <UsersIcon />
