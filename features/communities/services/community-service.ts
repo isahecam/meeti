@@ -1,9 +1,11 @@
 import { User } from "better-auth"
+import { notFound } from "next/navigation"
 
 import { CommunityPolicy } from "~/features/communities/policies/community-policy"
 import { MembershipPolicy } from "~/features/communities/policies/membership-policy"
 import { CommunityType } from "~/features/communities/schemas/community-schema"
 import { communityRepository, ICommunityRepository } from "~/features/communities/services/community-repository"
+import { SelectCommunity } from "~/features/communities/types/community-types"
 import { ok, err } from "~/lib/result"
 
 class CommunityService {
@@ -46,6 +48,46 @@ class CommunityService {
     )
 
     return enriched
+  }
+
+  async getCommunity(id: SelectCommunity["id"]) {
+    const community = await this.communityRepository.findById(id)
+    if (!community) notFound()
+    return community
+  }
+
+  async getCommunityDetails(communityId: SelectCommunity["id"], user: User) {
+    const community = await this.getCommunity(communityId)
+
+    const isMember = true
+    const isAdmin = CommunityPolicy.isAdmin(community, user)
+
+    return {
+      data: community,
+      context: {
+        isMember,
+        isAdmin,
+      },
+      permissions: {
+        canEdit: CommunityPolicy.canEdit(community, user),
+        canDelete: CommunityPolicy.canDelete(community, user),
+        canJoin: MembershipPolicy.canJoin(user, community, isMember),
+        canLeave: MembershipPolicy.canLeave(user, community, isMember),
+        canViewMembers: CommunityPolicy.canViewMembers(community, user),
+      },
+    }
+  }
+
+  async updateCommunity(communityId: SelectCommunity["id"], data: CommunityType, user: User) {
+    const community = await this.getCommunity(communityId)
+
+    if (!CommunityPolicy.canEdit(community, user)) return err({ reason: "UNAUTHORIZED" })
+
+    const communityUpdated = await this.communityRepository.update(communityId, data)
+
+    if (!communityUpdated) return err({ reason: "FAILED_TO_UPDATE_COMMUNITY" })
+
+    return ok(communityUpdated)
   }
 }
 
