@@ -11,6 +11,7 @@ export interface ICommunityRepository {
   findByUserId(userId: User["id"], limit?: number): Promise<SelectCommunity[]>
   findById(id: SelectCommunity["id"]): Promise<SelectCommunity | undefined>
   update(communityId: SelectCommunity["id"], data: CommunityType): Promise<SelectCommunity | undefined>
+  delete(communityId: SelectCommunity["id"]): Promise<void>
 }
 
 class CommunityRepository implements ICommunityRepository {
@@ -35,8 +36,11 @@ class CommunityRepository implements ICommunityRepository {
 
   async update(communityId: SelectCommunity["id"], data: CommunityType) {
     const [result] = await db.update(communitiesTable).set(data).where(eq(communitiesTable.id, communityId)).returning()
-
     return result
+  }
+
+  async delete(communityId: SelectCommunity["id"]) {
+    await db.delete(communitiesTable).where(eq(communitiesTable.id, communityId))
   }
 }
 
