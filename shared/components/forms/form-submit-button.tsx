@@ -1,8 +1,12 @@
+import { VariantProps } from "class-variance-authority"
 import { ButtonHTMLAttributes } from "react"
 
-import { Button } from "~/shared/components/ui/button"
+import { Button, buttonVariants } from "~/shared/components/ui/button"
 
-export function FormSubmitButton({ children, ...props }: ButtonHTMLAttributes<HTMLButtonElement>) {
+export function FormSubmitButton({
+  children,
+  ...props
+}: ButtonHTMLAttributes<HTMLButtonElement> & VariantProps<typeof buttonVariants>) {
   return (
     <Button type="submit" {...props}>
       {children}
