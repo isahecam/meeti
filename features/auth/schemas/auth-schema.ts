@@ -33,7 +33,12 @@ export const ResetPasswordSchema = BaseAuthSchema.pick({ password: true, passwor
   },
 )
 
+export const CheckPasswordSchema = z.object({
+  password: z.string().trim().nonempty({ error: "Establece tu contraseña para continuar" }),
+})
+
 export type SignUpType = z.infer<typeof SignUpSchema>
 export type SignInType = z.infer<typeof SignInSchema>
 export type ForgotPasswordType = z.infer<typeof ForgotPasswordSchema>
 export type ResetPasswordType = z.infer<typeof ResetPasswordSchema>
+export type CheckPasswordType = z.infer<typeof CheckPasswordSchema>
