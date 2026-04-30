@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation"
 
 import { UserCommunityCard } from "~/features/communities/components/cards/user-community-card"
+import { DeleteCommunityModal } from "~/features/communities/components/delete-community-modal"
 import { UserCommunitiesEmpty } from "~/features/communities/components/primitives/user-communities-empty"
 import { communityService } from "~/features/communities/services/community-service"
 import { requireAuth } from "~/lib/auth-server"
@@ -19,12 +20,16 @@ export async function UserCommunitiesList() {
   }
 
   return (
-    <ul className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-      {communities.map((community) => (
-        <li key={community.data.id}>
-          <UserCommunityCard community={community} />
-        </li>
-      ))}
-    </ul>
+    <>
+      <ul className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {communities.map((community) => (
+          <li key={community.data.id}>
+            <UserCommunityCard community={community} />
+          </li>
+        ))}
+      </ul>
+
+      <DeleteCommunityModal />
+    </>
   )
 }
