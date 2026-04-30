@@ -7,6 +7,7 @@ import { CommunityType } from "~/features/communities/schemas/community-schema"
 import { communityRepository, ICommunityRepository } from "~/features/communities/services/community-repository"
 import { SelectCommunity } from "~/features/communities/types/community-types"
 import { ok, err } from "~/lib/result"
+import { checkPassword } from "~/shared/utils/auth"
 
 class CommunityService {
   constructor(private communityRepository: ICommunityRepository) {}
@@ -88,6 +89,18 @@ class CommunityService {
     if (!communityUpdated) return err({ reason: "FAILED_TO_UPDATE_COMMUNITY" })
 
     return ok(communityUpdated)
+  }
+
+  async deleteCommunity(communityId: SelectCommunity["id"], password: string, user: User) {
+    const community = await this.getCommunity(communityId)
+
+    if (!CommunityPolicy.canDelete(community, user)) return err({ reason: "UNAUTHORIZED" })
+
+    const isValidPassword = await checkPassword(password)
+
+    if (!isValidPassword) return err({ reason: "INVALID_PASSWORD" })
+
+    return ok(await this.communityRepository.delete(communityId))
   }
 }
 
