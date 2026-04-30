@@ -1,6 +1,9 @@
+"use client"
+
 import { EllipsisVerticalIcon, PencilIcon, TrashIcon, UsersIcon } from "lucide-react"
 import Link from "next/link"
 
+import { useCommunityStore } from "~/features/communities/stores/community-store"
 import { SelectCommunity } from "~/features/communities/types/community-types"
 import { Button } from "~/shared/components/ui/button"
 import {
@@ -12,11 +15,13 @@ import {
   DropdownMenuTrigger,
 } from "~/shared/components/ui/dropdown-menu"
 
-export interface Props {
+interface Props {
   community: SelectCommunity
 }
 
 export function CommunityDropdownMenu({ community }: Props) {
+  const { setOpen, setCommunity } = useCommunityStore()
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -39,7 +44,12 @@ export function CommunityDropdownMenu({ community }: Props) {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem variant="destructive">
+          <DropdownMenuItem
+            variant="destructive"
+            onSelect={() => {
+              setCommunity(community)
+              setOpen(true)
+            }}>
             <TrashIcon />
             Eliminar
           </DropdownMenuItem>
