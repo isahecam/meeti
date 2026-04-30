@@ -1,6 +1,5 @@
 import { Metadata } from "next"
 import Link from "next/link"
-import { redirect } from "next/navigation"
 import { Suspense } from "react"
 
 import { UserCommunitiesList } from "~/features/communities/components/layout/user-communities-list"
@@ -15,11 +14,7 @@ export const metadata: Metadata = {
 }
 
 export default async function CommunitiesPage() {
-  const { isAuth } = await requireAuth()
-
-  if (!isAuth) {
-    redirect("/auth/login")
-  }
+  await requireAuth()
 
   return (
     <div className="px-12 py-8">

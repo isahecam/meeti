@@ -1,8 +1,7 @@
 import { Metadata } from "next"
-import { redirect } from "next/navigation"
 
 import { RegisterCard } from "~/features/auth/components/cards/register-card"
-import { requireAuth } from "~/lib/auth-server"
+import { requireGuest } from "~/lib/auth-server"
 
 export const metadata: Metadata = {
   title: "Crear Cuenta",
@@ -10,11 +9,7 @@ export const metadata: Metadata = {
 }
 
 export default async function RegisterPage() {
-  const { session } = await requireAuth()
-
-  if (session) {
-    redirect("/dashboard")
-  }
+  await requireGuest()
 
   return <RegisterCard />
 }

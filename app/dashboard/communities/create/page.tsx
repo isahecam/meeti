@@ -1,6 +1,5 @@
 import { Metadata } from "next"
 import Link from "next/link"
-import { redirect } from "next/navigation"
 
 import { CreateCommunity } from "~/features/communities/components/create-community"
 import { requireAuth } from "~/lib/auth-server"
@@ -13,11 +12,7 @@ export const metadata: Metadata = {
 }
 
 export default async function CreateCommunitiesPage() {
-  const { isAuth } = await requireAuth()
-
-  if (!isAuth) {
-    redirect("/auth/login")
-  }
+  await requireAuth()
 
   return (
     <div className="space-y-16 px-12 py-8">

@@ -1,6 +1,5 @@
 import { Metadata } from "next"
 import Link from "next/link"
-import { redirect } from "next/navigation"
 
 import { requireAuth } from "~/lib/auth-server"
 import { Heading } from "~/shared/components/typography/heading"
@@ -12,11 +11,7 @@ export const metadata: Metadata = {
 }
 
 export default async function JoinedCommunitiesPage() {
-  const { isAuth } = await requireAuth()
-
-  if (!isAuth) {
-    redirect("/auth/login")
-  }
+  await requireAuth()
 
   return (
     <div className="px-12 py-8">

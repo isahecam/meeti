@@ -28,8 +28,7 @@ export async function generateMetadata({ params }: PageProps<"/dashboard/communi
 }
 
 export default async function EditCommunityPage({ params }: PageProps<"/dashboard/communities/[id]/edit">) {
-  const { isAuth, session } = await requireAuth()
-  if (!isAuth) redirect("/auth/login")
+  const { session } = await requireAuth()
 
   const { id } = await params
 
