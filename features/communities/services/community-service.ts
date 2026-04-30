@@ -7,6 +7,7 @@ import { CommunityType } from "~/features/communities/schemas/community-schema"
 import { communityRepository, ICommunityRepository } from "~/features/communities/services/community-repository"
 import { SelectCommunity } from "~/features/communities/types/community-types"
 import { ok, err } from "~/lib/result"
+import { deleteUTFiles } from "~/lib/uploadthing-server"
 import { checkPassword } from "~/shared/utils/auth"
 
 class CommunityService {
@@ -100,7 +101,8 @@ class CommunityService {
 
     if (!isValidPassword) return err({ reason: "INVALID_PASSWORD" })
 
-    return ok(await this.communityRepository.delete(communityId))
+    await this.communityRepository.delete(communityId)
+    await deleteUTFiles(community.image)
   }
 }
 
