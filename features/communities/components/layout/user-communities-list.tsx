@@ -21,7 +21,7 @@ export async function UserCommunitiesList() {
 
   return (
     <>
-      <ul className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <ul className="grid w-full grid-cols-1 gap-4 md:grid-cols-2">
         {communities.map((community) => (
           <li key={community.data.id}>
             <UserCommunityCard community={community} />
