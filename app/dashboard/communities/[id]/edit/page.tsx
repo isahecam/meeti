@@ -34,7 +34,7 @@ export default async function EditCommunityPage({ params }: PageProps<"/dashboar
 
   const community = await communityService.getCommunityDetails(id, session.user)
 
-  if (!community.permissions.canEdit) redirect("/dashboard/communities")
+  if (!community.permissions?.canEdit) redirect("/dashboard/communities")
 
   return (
     <div className="space-y-16 px-12 py-8">
