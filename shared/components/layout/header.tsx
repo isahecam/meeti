@@ -15,7 +15,7 @@ export async function Header() {
             <MeetiLogo />
           </Link>
         </div>
-        {session ? <UserNavigation user={session.user} /> : <GuestNavigation />}
+        {session ? <UserNavigation /> : <GuestNavigation />}
       </div>
     </header>
   )
