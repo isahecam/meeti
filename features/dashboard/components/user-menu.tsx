@@ -1,13 +1,14 @@
 "use client"
 
-import { LogOut, Menu } from "lucide-react"
+import { LogOut } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useCallback, useState, useTransition } from "react"
+import { useState, useTransition } from "react"
 import { toast } from "sonner"
 
 import { USER_MENU_ITEMS } from "~/features/dashboard/constants/user-menu-items"
-import { signOut } from "~/lib/auth-client"
+import { signOut, useSession } from "~/lib/auth-client"
+import { Avatar, AvatarFallback, AvatarImage } from "~/shared/components/ui/avatar"
 import { Button } from "~/shared/components/ui/button"
 import {
   DropdownMenu,
@@ -18,14 +19,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/shared/components/ui/dropdown-menu"
+import { Skeleton } from "~/shared/components/ui/skeleton"
 import { Spinner } from "~/shared/components/ui/spinner"
+import { getUserInitials } from "~/shared/utils/get-user-initials"
 
 export function UserMenu() {
   const [open, setOpen] = useState(false)
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
-
-  const handleOpenChange = useCallback((value: boolean) => !isPending && setOpen(value), [isPending])
+  const [state, startTransition] = useTransition()
 
   const handleSignOut = () => {
     startTransition(async () => {
@@ -44,11 +45,21 @@ export function UserMenu() {
     })
   }
 
+  const { data, isPending } = useSession()
+
+  if (isPending) return <Skeleton className="size-10 rounded-full" />
+
   return (
-    <DropdownMenu open={open} onOpenChange={handleOpenChange}>
+    <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon">
-          <Menu />
+        <Button variant="ghost" size="icon-lg" className="rounded-full">
+          <Avatar>
+            {data?.user.image ? (
+              <AvatarImage src={data.user.image} />
+            ) : (
+              <AvatarFallback>{getUserInitials(data?.user?.name ?? "")}</AvatarFallback>
+            )}
+          </Avatar>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-40" align="end">
@@ -65,8 +76,8 @@ export function UserMenu() {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem onClick={handleSignOut} disabled={isPending}>
-            {isPending ? (
+          <DropdownMenuItem onClick={handleSignOut} disabled={state}>
+            {state ? (
               <>
                 <Spinner data-icon="inline-start" />
                 Cerrando sesión...
